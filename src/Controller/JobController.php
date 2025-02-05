@@ -11,14 +11,14 @@ final class JobController extends AbstractController
     #[Route('/job', name: 'app_job')]
     public function index(): Response
     {
-        return $this->render('job/index.html.twig', [
+        return $this->render('jobs/index.html.twig', [
         ]);
     }
     
     #[Route('/job/show', name: 'app_job')]
     public function show(): Response
     {
-        return $this->render('job/show.html.twig', [
+        return $this->render('jobs/show.html.twig', [
         ]);
     }
 
