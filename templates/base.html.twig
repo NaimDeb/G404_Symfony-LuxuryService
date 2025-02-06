@@ -136,22 +136,22 @@
 								<nav class="overlay-menu">
 									<ul>
 										<li>
-											<a href="/">
+											<a href="{{ path('app_home') }}">
 												Home
 											</a>
 										</li>
 										<li>
-											<a href="/templates/jobs/index.html">
+											<a href="{{ path('app_job') }}">
 												Jobs Offers
 											</a>
 										</li>
 										<li>
-											<a href="/templates/compagny.html">
+											<a href="{{ path('app_company') }}">
 												About Us
 											</a>
 										</li>
 										<li>
-											<a href="/templates/contact.html">
+											<a href="{{ path('app_contact') }}">
 												Contact
 											</a>
 										</li>
@@ -159,12 +159,14 @@
 											-
 										</li>
 										<li>
-											<a href="/templates/auth/profile.html">
+											{# <a href="{{ path('app_profile') }}"> #}
+											<a href="#"></a>
 												Profile
 											</a>
 										</li>
 										<li>
-											<a href="/logout.html">
+											{# <a href="{{ path('logout') }}"> #}
+											<a href="#"></a>
 												Logout
 											</a>
 										</li>
@@ -200,7 +202,7 @@
 									</a>
 								</li>
 								<li class=" dropdown">
-									<a target="_self" href="/templates/jobs/index.html">
+									<a target="_self" href={{ path('app_job') }}>
 										<i class=""></i>
 										<span>
 											Jobs offers
@@ -208,7 +210,7 @@
 									</a>
 								</li>
 								<li class=" dropdown">
-									<a target="_self" href="/templates/compagny.html">
+									<a target="_self" href={{ path('app_company') }}>
 										<i class=""></i>
 										<span>
 											About us
@@ -216,7 +218,7 @@
 									</a>
 								</li>
 								<li class=" dropdown">
-									<a target="_self" href="/templates/contact.html">
+									<a target="_self" href={{ path('app_contact') }}>
 										<i class=""></i>
 										<span>
 											Contact
@@ -299,21 +301,21 @@
 								</a>
 							</li>
 							<li class=" dropdown">
-								<a target="_self" href="/template/jobs/jobs.html">
+								<a target="_self" href="{{ path('app_job') }}">
 									<span>
 										Jobs offers
 									</span>
 								</a>
 							</li>
 							<li class=" dropdown">
-								<a target="_self" href="/templates/compagny.html">
+								<a target="_self" href="{{ path('app_company') }}">
 									<span>
 										About us
 									</span>
 								</a>
 							</li>
 							<li class=" dropdown">
-								<a target="_self" href="/templates/contact.html">
+								<a target="_self" href="{{ path('app_contact') }}">
 									<span>
 										Contact
 									</span>

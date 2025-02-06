@@ -109,11 +109,11 @@
                         <nav class="overlay-menu">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="/templates/jobs/index.html">Jobs Offers</a></li>
-                                <li><a href="/templates/compagny.html">About Us</a></li>
-                                <li><a href="/templates/contact.html">Contact</a></li>
+                                <li><a href="{% path 'app_job' %}">Jobs Offers</a></li>
+                                <li><a href="{% path 'app_company' %}">About Us</a></li>
+                                <li><a href="{% path 'app_contact' %}">Contact</a></li>
                                 <li>-</li>
-                                <li><a href="/templates/auth/profile.html">Profile</a></li>
+                                <li><a href="{% path 'app_profile' %}">Profile</a></li>
                                 <li><a href="/logout.html">Logout</a></li>
                             </ul>
                         </nav>
@@ -141,19 +141,19 @@
                             </a>
                         </li>
                         <li class=" dropdown">
-                            <a target="_self" href="/templates/jobs/index.html">
+                            <a target="_self" href="{% path 'app_job' %}">
                                 <i class=""></i>
                                 <span>Jobs offers</span>
                             </a>
                         </li>
                         <li class=" dropdown">
-                            <a target="_self" href="/templates/compagny.html">
+                            <a target="_self" href="{% path 'app_company' %}">
                                 <i class=""></i>
                                 <span>About us</span>
                             </a>
                         </li>
                         <li class=" dropdown">
-                            <a target="_self" href="/templates/contact.html">
+                            <a target="_self" href="{% path 'app_contact' %}">
                                 <i class=""></i>
                                 <span>Contact</span>
                             </a>
