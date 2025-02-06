@@ -1,18 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block meta %}
-	{{ parent() }}
-    <meta name="base_url" content="http://www.fgtechs.fr/z-pedro/wwwluxuryservices">
-    <meta name="csrf-token" content="9Tnm0YBCxgVTxoqI1HzccsU5NuE9RughZmhpzgXn">
-{% endblock meta %}
-
-{% block linkicon %}
-    <link rel="shortcut icon" href="assets/img/ico/fav.png">
-{% endblock linkicon %}
+{% block base_url %}http://www.fgtechs.fr/z-pedro/wwwluxuryservices{% endblock base_url %}
+{% block csrf_token %}9Tnm0YBCxgVTxoqI1HzccsU5NuE9RughZmhpzgXn{% endblock csrf_token %}
+{% block favicon %}assets/img/ico/fav.png{% endblock %}
 
 {% block body %}
-
-    <!-- Page -->
+<!-- Page -->
     <div class="page">
 
         <!-- Page Header-->
@@ -90,5 +83,4 @@
         </section>
 
     </div>
-
 {% endblock %}
