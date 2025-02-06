@@ -72,24 +72,29 @@
 						Create a new account
 					</h3>
 
+
+
 					{{ form_start(registrationForm, {
                     'attr': {
                         'id': 'register-form',
                         'role': 'form',
                         'method': 'post',
                         'autocomplete': 'off',
-                        'data-parsley-validate': ''
                     }
                 }) }}
 
 
+						{{ form_errors(registrationForm.email , {'attr': {'class': 'alert alert-danger'}} ) }}
+						{{ form_errors(registrationForm.plainPassword.first , {'attr': {'class': 'alert alert-danger'}} ) }}
+						{{ form_errors(registrationForm.plainPassword.second , {'attr': {'class': 'alert alert-danger'}} ) }}
+						{{ form_errors(registrationForm.agreeTerms , {'attr': {'class': 'alert alert-danger'} } ) }}
+
+
 					<div class="input-field">
-					{{ form_errors(registrationForm.email) }}
+					
 						{{ form_widget(registrationForm.email, {
                         'attr': {
                             'required': 'required',
-                            'data-parsley-trigger': 'change',
-                            'data-parsley-error-message': 'A valid email address is required.'
                         }
                     }) }}
 						{{ form_label(registrationForm.email) }}
@@ -99,13 +104,10 @@
 					</div>
 
 					<div class="input-field">
-                        {{ form_errors(registrationForm.plainPassword.first) }}
+                        
 						{{ form_widget(registrationForm.plainPassword.first, {
                         'attr': {
                             'required': 'required',
-                            'data-parsley-trigger': 'change',
-                            'data-parsley-minlength': '6',
-                            'data-parsley-error-message': 'The password must be at least 6 characters.'
                         }
                     }) }}
 						{{ form_label(registrationForm.plainPassword.first, 'Password') }}
@@ -116,13 +118,10 @@
 					</div>
 
 					<div class="input-field">
-                        {{ form_errors(registrationForm.plainPassword.second) }}
+                        
 						{{ form_widget(registrationForm.plainPassword.second, {
                         'attr': {
                             'required': 'required',
-                            'data-parsley-trigger': 'change',
-                            'data-parsley-equalto': '#{{ registrationForm.plainPassword.first.vars.id }}',
-                            'data-parsley-error-message': 'Password does not match.'
                         }
                     }) }}
 						{{ form_label(registrationForm.plainPassword.second, 'Confirm Password') }}
@@ -133,9 +132,9 @@
 					</div>
 
 					<div class="checkbox">
-                        {{ form_errors(registrationForm.agreeTerms) }}
+                        
 						{{ form_widget(registrationForm.agreeTerms) }}
-						{{ form_label(registrationForm.agreeTerms, 'I have read and I accept the <a href="#!" target="_blank">Terms Of Use</a>') | raw }}
+						{{ form_label(registrationForm.agreeTerms, 'I have read and I accept the Terms Of Use')}}
 					</div>
 
 					<button type="submit" class="btn btn-lg gradient secondary btn-block waves-effect waves-light mt-20 mb-20">
