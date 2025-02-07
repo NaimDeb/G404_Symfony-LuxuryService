@@ -77,7 +77,7 @@ class Candidate
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setFirstName(?string $firstName): static
     {
         $this->firstName = $firstName;
 
@@ -89,7 +89,7 @@ class Candidate
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): static
+    public function setLastName(?string $lastName): static
     {
         $this->lastName = $lastName;
 
@@ -101,7 +101,7 @@ class Candidate
         return $this->address;
     }
 
-    public function setAddress(string $address): static
+    public function setAddress(?string $address): static
     {
         $this->address = $address;
 
@@ -113,7 +113,7 @@ class Candidate
         return $this->country;
     }
 
-    public function setCountry(string $country): static
+    public function setCountry(?string $country): static
     {
         $this->country = $country;
 

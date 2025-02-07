@@ -16,21 +16,21 @@ class CandidateType extends AbstractType
     {
         $builder
         // Texts 
-            ->add('firstName', TextType::class)
+            ->add('firstName', TextType::class, ['required' => false])
 
-            ->add('lastName', TextType::class)
+            ->add('lastName', TextType::class, ['required' => false])
 
-            ->add('address', TextType::class)
+            ->add('address', TextType::class, ['required' => false])
 
-            ->add('country', TextType::class)
+            ->add('country', TextType::class, ['required' => false])
 
-            ->add('nationality', TextType::class)
+            ->add('nationality', TextType::class, ['required' => false])
 
-            ->add('currentLocation', TextType::class)
+            ->add('currentLocation', TextType::class, ['required' => false])
 
-            ->add('placeOfBirth', TextType::class)
+            ->add('placeOfBirth', TextType::class, ['required' => false])
 
-            ->add('shortDescription', TextType::class)
+            ->add('shortDescription', TextType::class, ['required' => false])
 
         // 
 
