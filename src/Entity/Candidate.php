@@ -5,6 +5,10 @@ namespace App\Entity;
 use App\Repository\CandidateRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 class Candidate
@@ -66,10 +70,85 @@ class Candidate
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
+    #[Vich\UploadableField(mapping: 'passport', fileNameProperty: 'passportFilename')]
+    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png', 'application/pdf'])]
+    private ?File $passportFile = null;
+
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $passportFilename = null;
+
+    #[Vich\UploadableField(mapping: 'curriculumvitae', fileNameProperty: 'curriculumvitaeFilename')]
+    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png', 'application/pdf'])]
+    private ?File $curriculumVitaeFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $curriculumVitaeFilename = null;
+
+    #[Vich\UploadableField(mapping: 'profilePicture', fileNameProperty: 'profilePictureFilename')]
+    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png'])]
+    private ?File $profilePictureFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePictureFilename = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $experience = null;
+
 
     public function _construct(){
         $this->createdAt = new \DateTimeImmutable();
     }
+
+
+    
+    public function getProfilePictureFile(): ?File
+    {
+        return $this->profilePictureFile;
+    }
+
+    public function setProfilePictureFile(?File $profilePictureFile): self
+    {
+        $this->profilePictureFile = $profilePictureFile;
+
+        if (null !== $profilePictureFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function getCurriculumVitaeFile(): ?File
+    {
+        return $this->curriculumVitaeFile;
+    }
+
+    public function setCurriculumVitaeFile(?File $curriculumVitaeFile): self
+    {
+        $this->curriculumVitaeFile = $curriculumVitaeFile;
+        if (null !== $curriculumVitaeFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function getPassportFile(): ?File
+    {
+        return $this->passportFile;
+    }
+
+    public function setPassportFile(?File $passportFile): self
+    {
+        $this->passportFile = $passportFile;
+
+        if (null !== $passportFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
@@ -276,6 +355,54 @@ class Candidate
     public function setBirthDate(?\DateTimeInterface $birthDate): static
     {
         $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    public function getPassportFilename(): ?string
+    {
+        return $this->passportFilename;
+    }
+
+    public function setPassportFilename(?string $passportFilename): static
+    {
+        $this->passportFilename = $passportFilename;
+
+        return $this;
+    }
+
+    public function getCurriculumVitaeFilename(): ?string
+    {
+        return $this->curriculumVitaeFilename;
+    }
+
+    public function setCurriculumVitaeFilename(?string $curriculumVitaeFilename): static
+    {
+        $this->curriculumVitaeFilename = $curriculumVitaeFilename;
+
+        return $this;
+    }
+
+    public function getProfilePictureFilename(): ?string
+    {
+        return $this->profilePictureFilename;
+    }
+
+    public function setProfilePictureFilename(?string $profilePictureFilename): static
+    {
+        $this->profilePictureFilename = $profilePictureFilename;
+
+        return $this;
+    }
+
+    public function getExperience(): ?string
+    {
+        return $this->experience;
+    }
+
+    public function setExperience(?string $experience): static
+    {
+        $this->experience = $experience;
 
         return $this;
     }

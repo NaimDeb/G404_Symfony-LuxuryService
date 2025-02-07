@@ -102,7 +102,7 @@
                     <div class="file-field input-field" style="margin-top: 32px;">
                         <div class="btn btn-lg primary waves-effect waves-light">
                             <span><i class="material-icons">insert_photo</i> Photo</span>
-                            {# {{ form_widget(candidateForm.photo) }} #}
+                            {{ form_widget(candidateForm.profilePictureFile) }}
                         </div>
                         <div class="existing-file">
                             <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> profil_picture.jpg</a>
@@ -148,7 +148,7 @@
                         <div class="file-field input-field">
                             <div class="btn btn-lg primary waves-effect waves-light">
                                 <span><i class="material-icons">&#xE24D;</i> Passport</span>
-                                {# {{ form_widget(candidateForm.passport) }} #}
+                                {{ form_widget(candidateForm.passportFile) }}
                             </div>
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> passeport.jpg</a>
@@ -160,7 +160,7 @@
                         <div class="file-field input-field">
                             <div class="btn btn-lg primary waves-effect waves-light">
                                 <span><i class="material-icons">&#xE24D;</i> CV</span>
-                                {# {{ form_widget(candidateForm.cv) }} #}
+                                {{ form_widget(candidateForm.curriculumVitaeFile) }}
                             </div>
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> CV.pdf</a>
@@ -180,8 +180,8 @@
                     </div>
                     <div class="col-xs-12 col-sm-12">
                         <div class="input-field">
-                            {# {{ form_widget(candidateForm.experience) }} #}
-                            {# {{ form_label(candidateForm.experience, 'Experience', {'label_attr': {'class': 'active'}}) }} #}
+                            {{ form_widget(candidateForm.experience) }}
+                            {{ form_label(candidateForm.experience, 'Experience', {'label_attr': {'class': 'active'}}) }}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12">

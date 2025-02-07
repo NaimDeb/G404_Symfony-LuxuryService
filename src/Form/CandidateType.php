@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,6 +64,35 @@ class CandidateType extends AbstractType
                 'class' => JobCategory::class,
                 'placeholder' => 'Choose the sector you work in...',
             ])
+
+            // Choices
+
+            ->add('experience', ChoiceType::class, [
+                'choices' => [
+                    '0 - 6 month' => '0 - 6 month',
+                    '6 month - 1 year' => '6 month - 1 year',
+                    '1 - 2 years' => '1 - 2 years',
+                    '2+ years' => '2+ years',
+                    '5+ years' => '5+ years',
+                    '10+ years' => '10+ years',
+                ]])
+
+
+            // Files
+
+
+            ->add('passportFile', FileType::class, [
+                'required' => false,
+            ])
+            
+            ->add('curriculumVitaeFile', FileType::class, [
+                'required' => false,
+            ])
+
+            ->add('profilePictureFile', FileType::class, [
+                'required' => false,
+            ])
+            
 
         // 
 
