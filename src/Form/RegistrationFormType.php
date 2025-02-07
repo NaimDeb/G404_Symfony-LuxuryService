@@ -39,6 +39,8 @@ class RegistrationFormType extends AbstractType
                     'id' => 'accept-terms',
                     'required' => true,
                 ],
+                'label' => 'I have read and I accept the <a href="#!" target="_blank">Terms Of Use</a>',
+                'label_html' => true,
             ])
             ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
