@@ -3,9 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Candidate;
+use App\Entity\Gender;
+use App\Entity\JobCategory;
 use App\Entity\User;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,6 +37,32 @@ class CandidateType extends AbstractType
             ->add('placeOfBirth', TextType::class, ['required' => false])
 
             ->add('shortDescription', TextType::class, ['required' => false])
+
+            // Bool
+            ->add('availibility', CheckboxType::class, [
+                'required' => false,
+                'label' => 'Available for work ?',
+            ])
+
+            // Dates
+
+            ->add('birthDate', DateType::class, ['required' => false, 'attr' => [
+                'class' => 'datepicker'
+                ]])
+
+
+            // Lists of other classes
+
+            ->add('gender', EntityType::class, [
+                'class' => Gender::class,
+                'placeholder' => 'Choose your gender...',
+                'required' => false,
+            ])
+
+            ->add('jobCategory', EntityType::class, [
+                'class' => JobCategory::class,
+                'placeholder' => 'Choose the sector you work in...',
+            ])
 
         // 
 
