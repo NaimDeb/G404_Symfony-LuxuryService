@@ -158,24 +158,55 @@
 										<li>
 											-
 										</li>
+										{% if app.user %}
 										<li>
-											{# <a  href="{{ path('app_profile') }}"> #}
-											<a href="#"></a>
+											<a  href="{{ path('app_profile') }}">
+											
 												Profile
 											</a>
 										</li>
 										<li>
-											{# <a  href="{{ path('logout') }}"> #}
-											<a href="#"></a>
+											<a  href="{{ path('app_logout') }}">
+											
 												Logout
 											</a>
 										</li>
+										{% else %}
+										<li>
+											<a  href="{{ path('app_login') }}">
+											
+												Login
+											</a>
+										</li>
+										<li>
+											<a  href="{{ path('app_register') }}">
+											
+												Sign up
+											</a>
+										</li>
+										{% endif %}
 									</ul>
 								</nav>
 							</div>
 						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="menuzord-menu pull-right light" role="navigation">
+							{% if app.user %}
+								<li class=" dropdown">
+									<a target="_self" href="{{ path('app_logout') }}">
+										<span>
+											Log out
+										</span>
+									</a>
+								</li>
+								<li class=" dropdown">
+									<a target="_self" href="{{ path('app_profile') }}" class="btn bn-lg gradient secondary btn-block waves-effect waves-light btn-register">
+										<span>
+											{{ user.email }}
+										</span>
+									</a>
+								</li>
+							{% else %}
 								<li class=" dropdown">
 									<a target="_self" href="{{ path('app_login') }}">
 										<span>
@@ -189,8 +220,10 @@
 											Sign Up
 										</span>
 									</a>
-
 								</li>
+							{% endif %}
+				
+
 							</ul>
 							<ul class="menuzord-menu pull-right light" role="navigation">
 								<li class=" dropdown {{ app.current_route is same as('app_home')  ? 'active' : '' }}">
@@ -232,7 +265,9 @@
 			</div>
 		</header>
 
-		<div class="base"> {% block body %}{% endblock %}
+		<div class="base"> 
+		{% include "partials/flash.html.twig" %}
+		{% block body %}{% endblock %}
 			</div>
 
 			<!-- Footer -->
