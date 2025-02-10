@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
+
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 class Candidate
 {
@@ -18,9 +19,7 @@ class Candidate
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
@@ -95,6 +94,10 @@ class Candidate
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $experience = null;
 
+    #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $User = null;
+
 
     public function _construct(){
         $this->createdAt = new \DateTimeImmutable();
@@ -155,17 +158,7 @@ class Candidate
         return $this->id;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->User;
-    }
 
-    public function setUser(User $User): static
-    {
-        $this->User = $User;
-
-        return $this;
-    }
 
     public function getFirstName(): ?string
     {
@@ -403,6 +396,18 @@ class Candidate
     public function setExperience(?string $experience): static
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(User $User): static
+    {
+        $this->User = $User;
 
         return $this;
     }

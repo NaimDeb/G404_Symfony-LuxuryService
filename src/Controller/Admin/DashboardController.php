@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Gender;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -41,12 +43,25 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('TPLuxury');
+            ->setTitle('TPLuxury')
+            ->setFaviconPath('img/luxury-services-logo.png');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-tachometer-alt');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+
+        yield MenuItem::section('Jobs');
+        
+        yield MenuItem::section('Candidates');
+        
+        yield MenuItem::linkToCrud('Genders', 'fas fa-genderless', Gender::class);
+        
+        
+        yield MenuItem::section('Recruters');
+        yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+
+
     }
 }

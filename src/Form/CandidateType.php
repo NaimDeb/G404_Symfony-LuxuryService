@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CandidateType extends AbstractType
@@ -23,21 +25,77 @@ class CandidateType extends AbstractType
     {
         $builder
         // Texts 
-            ->add('firstName', TextType::class, ['required' => false])
+            ->add('firstName', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'first_name',
+                ],
+                'label' => 'First name',
+            ])
 
-            ->add('lastName', TextType::class, ['required' => false])
+            ->add('lastName', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'last_name',
+                ],
+                'label' => 'Last name',
+            ])
 
-            ->add('address', TextType::class, ['required' => false])
+            ->add('address', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'address',
+                ],
+                'label' => 'Address',
+            ])
 
-            ->add('country', TextType::class, ['required' => false])
+            ->add('country', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'country',
+                ],
+                'label' => 'Country',
+            ])
 
-            ->add('nationality', TextType::class, ['required' => false])
+            ->add('nationality', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'nationality',
+                ],
+                'label' => 'Nationality',
+            ])
 
-            ->add('currentLocation', TextType::class, ['required' => false])
+            ->add('currentLocation', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'current_location',
+                ],
+                'label' => 'Current location',
+            ])
 
-            ->add('placeOfBirth', TextType::class, ['required' => false])
+            ->add('placeOfBirth', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'place_of_birth',
+                ],
+                'label' => 'Place of birth',
+            ])
 
-            ->add('shortDescription', TextType::class, ['required' => false])
+            ->add('shortDescription', TextType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control',
+                    'id' => 'short_description',
+                ],
+                'label' => 'Short description',
+            ])
 
             // Bool
             ->add('availibility', CheckboxType::class, [
@@ -58,11 +116,24 @@ class CandidateType extends AbstractType
                 'class' => Gender::class,
                 'placeholder' => 'Choose your gender...',
                 'required' => false,
+                'attr' => [
+                    'id' => 'gender'
+                ],
+                'label' => 'Gender',
+                'label_attr' => [ 'class' => 'active'],
+                'placeholder' => 'Choose your gender...'
             ])
 
             ->add('jobCategory', EntityType::class, [
                 'class' => JobCategory::class,
                 'placeholder' => 'Choose the sector you work in...',
+                'required' => false,
+                'attr' => [
+                    'id' => 'job_sector'
+                ],
+                'label' => 'Interest in job sector',
+                'label_attr' => [ 'class' => 'active'],
+                'placeholder' => 'Choose an option...'
             ])
 
             // Choices
@@ -92,6 +163,8 @@ class CandidateType extends AbstractType
             ->add('profilePictureFile', FileType::class, [
                 'required' => false,
             ])
+
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->setUpdatedAt(...));
             
 
         // 
@@ -105,4 +178,13 @@ class CandidateType extends AbstractType
             'data_class' => Candidate::class,
         ]);
     }
+
+    private function setUpdatedAt(FormEvent $event):void {
+
+        $candidate = $event->getData();
+        $candidate->setUpdatedAt(new \DateTimeImmutable());
+
+    }
+
+
 }
