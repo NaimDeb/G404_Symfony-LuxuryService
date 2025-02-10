@@ -153,16 +153,45 @@ class CandidateType extends AbstractType
             // Files
 
 
-            // ->add('passportFile', FileType::class, [
-            //     'required' => false,
-                
-            // ])
+            ->add('passportFile', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF or image',
+                    ])
+                ],
+                'attr' => [
+                    'accept' => '.jpg,.jpeg,.png,.gif,.pdf',
+                    'id' => 'cv',
+                ]
+            ])
             
-            // ->add('curriculumVitaeFile', FileType::class, [
-            //     'required' => false,
-                
-                
-            // ])
+            ->add('curriculumVitaeFile', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF or image',
+                    ])
+                ],
+                'attr' => [
+                    'accept' => '.jpg,.jpeg,.png,.gif,.pdf',
+                    'id' => 'cv',
+                ]
+            ])
 
             ->add('profilePictureFile', FileType::class,[
                 'mapped' => false,

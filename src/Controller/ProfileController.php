@@ -60,23 +60,23 @@ final class ProfileController extends AbstractController
             }
 
             $profilePictureFile = $form->get('profilePictureFile')->getData();
-            // $passportFile = $form->get('passportFile')->getData();
-            // $curriculumVitaeFile = $form->get('curriculumVitaeFile')->getData();
+            $passportFile = $form->get('passportFile')->getData();
+            $curriculumVitaeFile = $form->get('curriculumVitaeFile')->getData();
 
             if($profilePictureFile){
                 $profilPictureName = $fileUploader->upload($profilePictureFile, $candidate, 'profilePicture', 'profile_pictures');
                 $candidate->setProfilePicture($profilPictureName);
             }
 
-            // if ($passportFile) {
-            //     $passportFileName = $fileUploader->upload($passportFile, $candidate, 'passport', 'passport_files');
-            //     $candidate->setPassport($passportFileName);
-            // }
+            if ($passportFile) {
+                $passportFileName = $fileUploader->upload($passportFile, $candidate, 'passport', 'passport_files');
+                $candidate->setPassport($passportFileName);
+            }
 
-            // if ($curriculumVitaeFile) {
-            //     $curriculumVitaeFileName = $fileUploader->upload($curriculumVitaeFile, $candidate, 'curriculumVitae', 'cv_files');
-            //     $candidate->setCurriculumVitae($curriculumVitaeFileName);
-            // }
+            if ($curriculumVitaeFile) {
+                $curriculumVitaeFileName = $fileUploader->upload($curriculumVitaeFile, $candidate, 'curriculumVitae', 'cv_files');
+                $candidate->setCurriculumVitae($curriculumVitaeFileName);
+            }
 
 
             // Todo : cv & passport
