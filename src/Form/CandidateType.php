@@ -211,8 +211,15 @@ class CandidateType extends AbstractType
                     'accept' => '.jpg,.jpeg,.png,.gif',
                     'id' => 'photo',
                 ]
-            ])
+                ])
 
+
+            // Account
+
+
+
+
+            // UpdatedAt eventlistener
             ->addEventListener(FormEvents::POST_SUBMIT, $this->setUpdatedAt(...));
             
 
