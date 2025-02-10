@@ -118,9 +118,11 @@
                             {{ form_widget(candidateForm.profilePictureFile) }}
                         </div>
                         {# {{ if app.user.candidate.profilePictureFilename }} #}
+                        {% if app.user.candidate.profilePicture is not null %}
                         <div class="existing-file">
-                            <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> profil_picture.jpg</a>
+                            <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.profilePicture }}  </a>
                         </div>
+                        {% endif %}
                         {# {{ endif }} #}
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text" placeholder="Upload your ID photo" readonly>
@@ -177,10 +179,14 @@
                             <div class="btn btn-lg primary waves-effect waves-light">
                                 <span><i class="material-icons">&#xE24D;</i> Passport</span>
                                 {{ form_widget(candidateForm.passportFile) }}
+                                {{ form_errors(candidateForm.passportFile) }}
+
                             </div>
+                            {% if app.user.candidate.passport is not null %}
                             <div class="existing-file">
-                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> passeport.jpg</a>
+                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.passport }}  </a>
                             </div>
+                            {% endif %}
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
                             </div>
@@ -195,9 +201,11 @@
                                 {{ form_errors(candidateForm.curriculumVitaeFile) }}
                             </div>
 
+                            {% if app.user.candidate.curriculumVitae is not null %}
                             <div class="existing-file">
-                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> CV.pdf</a>
+                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.curriculumVitae }}  </a>
                             </div>
+                            {% endif %}
 
 
                             <div class="file-path-wrapper">
