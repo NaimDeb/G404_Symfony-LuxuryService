@@ -122,7 +122,7 @@ class CandidateType extends AbstractType
                 ],
                 'label' => 'Gender',
                 'label_attr' => [ 'class' => 'active'],
-                'placeholder' => 'Choose your gender...'
+                'placeholder' => 'Choose your gender...',
             ])
 
             ->add('jobCategory', EntityType::class, [
