@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class CandidateType extends AbstractType
 {
@@ -152,16 +153,35 @@ class CandidateType extends AbstractType
             // Files
 
 
-            ->add('passportFile', FileType::class, [
-                'required' => false,
-            ])
+            // ->add('passportFile', FileType::class, [
+            //     'required' => false,
+                
+            // ])
             
-            ->add('curriculumVitaeFile', FileType::class, [
-                'required' => false,
-            ])
+            // ->add('curriculumVitaeFile', FileType::class, [
+            //     'required' => false,
+                
+                
+            // ])
 
-            ->add('profilePictureFile', FileType::class, [
+            ->add('profilePictureFile', FileType::class,[
+                'mapped' => false,
                 'required' => false,
+                'constraints' => [
+                    new File([
+                        'maxSize' => '20M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid Image document',
+                    ])
+                ],
+                'attr' => [
+                    'accept' => '.jpg,.jpeg,.png,.gif',
+                    'id' => 'photo',
+                ]
             ])
 
             ->addEventListener(FormEvents::POST_SUBMIT, $this->setUpdatedAt(...));
@@ -179,11 +199,12 @@ class CandidateType extends AbstractType
         ]);
     }
 
-    private function setUpdatedAt(FormEvent $event):void {
-
+    private function setUpdatedAt(FormEvent $event): void
+    {
         $candidate = $event->getData();
-        $candidate->setUpdatedAt(new \DateTimeImmutable());
-
+        if ($candidate instanceof Candidate) {
+            $candidate->setUpdatedAt(new \DateTimeImmutable());
+        }
     }
 
 

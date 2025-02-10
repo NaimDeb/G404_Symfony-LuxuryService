@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\CandidateRepository;
@@ -9,8 +8,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 class Candidate
 {
@@ -18,8 +15,6 @@ class Candidate
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
@@ -69,96 +64,35 @@ class Candidate
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
-    #[Vich\UploadableField(mapping: 'passport', fileNameProperty: 'passportFilename')]
-    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png', 'application/pdf'])]
-    private ?File $passportFile = null;
 
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $passportFilename = null;
-
-    #[Vich\UploadableField(mapping: 'curriculumvitae', fileNameProperty: 'curriculumvitaeFilename')]
-    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png', 'application/pdf'])]
-    private ?File $curriculumVitaeFile = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $curriculumVitaeFilename = null;
-
-    #[Vich\UploadableField(mapping: 'profilePicture', fileNameProperty: 'profilePictureFilename')]
-    #[Assert\File(mimeTypes: ['image/jpeg', 'image/png'])]
-    private ?File $profilePictureFile = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $profilePictureFilename = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $experience = null;
 
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $User = null;
+    private ?User $user = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture = null;
 
-    public function _construct(){
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $curriculumVitae = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $passport = null;
+
+    public function __construct()
+    {
         $this->createdAt = new \DateTimeImmutable();
     }
 
-
-    
-    public function getProfilePictureFile(): ?File
-    {
-        return $this->profilePictureFile;
-    }
-
-    public function setProfilePictureFile(?File $profilePictureFile): self
-    {
-        $this->profilePictureFile = $profilePictureFile;
-
-        if (null !== $profilePictureFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        return $this;
-    }
-
-    public function getCurriculumVitaeFile(): ?File
-    {
-        return $this->curriculumVitaeFile;
-    }
-
-    public function setCurriculumVitaeFile(?File $curriculumVitaeFile): self
-    {
-        $this->curriculumVitaeFile = $curriculumVitaeFile;
-        if (null !== $curriculumVitaeFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        return $this;
-    }
-
-    public function getPassportFile(): ?File
-    {
-        return $this->passportFile;
-    }
-
-    public function setPassportFile(?File $passportFile): self
-    {
-        $this->passportFile = $passportFile;
-
-        if (null !== $passportFile) {
-            $this->updatedAt = new \DateTimeImmutable();
-        }
-
-        return $this;
-    }
 
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-
 
     public function getFirstName(): ?string
     {
@@ -352,41 +286,6 @@ class Candidate
         return $this;
     }
 
-    public function getPassportFilename(): ?string
-    {
-        return $this->passportFilename;
-    }
-
-    public function setPassportFilename(?string $passportFilename): static
-    {
-        $this->passportFilename = $passportFilename;
-
-        return $this;
-    }
-
-    public function getCurriculumVitaeFilename(): ?string
-    {
-        return $this->curriculumVitaeFilename;
-    }
-
-    public function setCurriculumVitaeFilename(?string $curriculumVitaeFilename): static
-    {
-        $this->curriculumVitaeFilename = $curriculumVitaeFilename;
-
-        return $this;
-    }
-
-    public function getProfilePictureFilename(): ?string
-    {
-        return $this->profilePictureFilename;
-    }
-
-    public function setProfilePictureFilename(?string $profilePictureFilename): static
-    {
-        $this->profilePictureFilename = $profilePictureFilename;
-
-        return $this;
-    }
 
     public function getExperience(): ?string
     {
@@ -402,12 +301,48 @@ class Candidate
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(User $User): static
+    public function setUser(User $user): static
     {
-        $this->User = $User;
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function getCurriculumVitae(): ?string
+    {
+        return $this->curriculumVitae;
+    }
+
+    public function setCurriculumVitae(?string $curriculumVitae): static
+    {
+        $this->curriculumVitae = $curriculumVitae;
+
+        return $this;
+    }
+
+    public function getPassport(): ?string
+    {
+        return $this->passport;
+    }
+
+    public function setPassport(?string $passport): static
+    {
+        $this->passport = $passport;
 
         return $this;
     }

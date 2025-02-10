@@ -164,15 +164,19 @@
                     </div>
                 </div>
             </div>
-            {# Passport #}
+            {# FILES #}
             <div class="row mt-40">
                 <h3 class="text-extrabold">Your professional profile</h3>
+
+                {# Passport #}
                 <div class="col-xs-12 col-sm-6">
                     <div class="card card-panel passport">
+
+                    
                         <div class="file-field input-field">
                             <div class="btn btn-lg primary waves-effect waves-light">
                                 <span><i class="material-icons">&#xE24D;</i> Passport</span>
-                                {{ form_widget(candidateForm.passportFile) }}
+                                {# {{ form_widget(candidateForm.passportFile) }} #}
                             </div>
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> passeport.jpg</a>
@@ -181,20 +185,29 @@
                                 <input class="file-path validate" type="text" placeholder="Upload your passport" readonly>
                             </div>
                         </div>
+
+                {# CV #}
+
                         <div class="file-field input-field">
                             <div class="btn btn-lg primary waves-effect waves-light">
                                 <span><i class="material-icons">&#xE24D;</i> CV</span>
-                                {{ form_widget(candidateForm.curriculumVitaeFile) }}
+                                {# {{ form_widget(candidateForm.curriculumVitaeFile) }} #}
+                                {# {{ form_errors(candidateForm.curriculumVitaeFile) }} #}
                             </div>
+
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> CV.pdf</a>
                             </div>
+
+
                             <div class="file-path-wrapper">
                                 <input class="file-path validate" type="text" placeholder="Upload your Curriculum Vitae" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
+
+            {# Job category #}
                 <div class="col-xs-12 col-sm-6">
                     <div class="col-xs-12 col-sm-12">
                         <div class="input-field" style="margin-top: 5px;">
