@@ -6,6 +6,7 @@ use App\Entity\Candidate;
 use App\Entity\User;
 use App\Form\CandidateType;
 use App\Form\RegistrationFormType;
+use App\Interfaces\FileHandlerInterface;
 use App\Service\FileUploader;
 use App\Repository\CandidateRepository;
 use App\Service\CandidateCompletionCalculator;
@@ -24,14 +25,11 @@ final class ProfileController extends AbstractController
         CandidateRepository $candidateRepository,
         Request $request,
         EntityManagerInterface $entityManager,
-        FileUploader $fileUploader,
         CandidateCompletionCalculator $completionCalculator,
+        FileHandlerInterface $fileHandler
     ): Response 
     {
 
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('app_login');
-        }
 
         /**
          * @var User $user
@@ -39,15 +37,20 @@ final class ProfileController extends AbstractController
         $user = $this->getUser();
 
         $candidate = $candidateRepository->findOneBy(["user" => $this->getUser()]);
-        
+
+                
+        if(!$user->isVerified()) {
+            return $this->render('errors/not-verified.html.twig');
+        }
+
+
+        // Crée un candidat quand on va dans le profil.
+        // Todo : delay creation to when I you fill the form
         if ($candidate === null) {
             $candidate = new Candidate();
             $candidate->setUser($user);
         }
 
-        if(!$user->isVerified()) {
-            return $this->render('errors/not-verified.html.twig');
-        }
 
 
 
@@ -60,32 +63,26 @@ final class ProfileController extends AbstractController
                 $candidate->setCreatedAt(new \DateTimeImmutable());
             }
 
-            $profilePictureFile = $form->get('profilePictureFile')->getData();
-            $passportFile = $form->get('passportFile')->getData();
-            $curriculumVitaeFile = $form->get('curriculumVitaeFile')->getData();
 
-            if($profilePictureFile){
-                $profilPictureName = $fileUploader->upload($profilePictureFile, $candidate, 'profilePicture', 'profile_pictures');
-                $candidate->setProfilePicture($profilPictureName);
-            }
+            // Handle file uploading
 
-            if ($passportFile) {
-                $passportFileName = $fileUploader->upload($passportFile, $candidate, 'passport', 'passport_files');
-                $candidate->setPassport($passportFileName);
-            }
-
-            if ($curriculumVitaeFile) {
-                $curriculumVitaeFileName = $fileUploader->upload($curriculumVitaeFile, $candidate, 'curriculumVitae', 'cv_files');
-                $candidate->setCurriculumVitae($curriculumVitaeFileName);
-            }
+            $files = [
+                'profilePicture' => $form->get('profilePictureFile')->getData(),
+                'passport' => $form->get('passportFile')->getData(),
+                'curriculumVitae' => $form->get('curriculumVitaeFile')->getData(),
+            ];
+            $fileHandler->handleFiles($candidate, $files);
 
 
-            // Todo : cv & passport
+            // Todo : password
 
             $candidate->setUpdatedAt(new \DateTimeImmutable());
             $entityManager->persist($candidate);
             $entityManager->flush();
             $this->addFlash('success', "Your profile has been updated!");
+            $this->redirect('app_profile');
+
+            return $this->redirectToRoute("app_profile");
         }
 
 
@@ -97,7 +94,18 @@ final class ProfileController extends AbstractController
             'candidateForm' => $form,
             'candidate' => $candidate,
             'completionRate' => $completionRate,
+
+            'originalProfilPicture' => $this->getOriginalFilename($candidate->getProfilePicture()),
+            'originalPassport' => $this->getOriginalFilename($candidate->getPassport()),
+            'originalCv' => $this->getOriginalFilename($candidate->getCurriculumVitae()),
             
         ]);
+
+
+    }
+
+    private function getOriginalFilename(?string $filename): ?string
+    {
+        return $filename ? preg_replace('/-\w{13}(?=\.\w{3,4}$)/', '', $filename) : null;
     }
 }

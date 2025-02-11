@@ -25,5 +25,12 @@ services:
     App\Service\FileUploader:
         arguments:
             $targetDirectory: '%upload_directory%'
+    
+    App\Services\FileHandler:
+        # This tag is used by the EventSubscriber to identify the service
+        # that handles the file upload.
+        tags: ["app.file_handler"]
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

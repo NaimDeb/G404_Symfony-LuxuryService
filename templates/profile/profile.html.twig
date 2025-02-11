@@ -22,6 +22,7 @@
 
     <!-- Page -->
     <div class="page">
+    {% include "partials/flash.html.twig" %}
 
     <!-- Page Header-->
     <section class="page-title page-title-bg fixed-bg overlay dark-5 padding-top-160 padding-bottom-80">
@@ -128,7 +129,7 @@
                         {# {{ if app.user.candidate.profilePictureFilename }} #}
                         {% if app.user.candidate is not null and app.user.candidate.profilePicture is not null %}
                         <div class="existing-file">
-                            <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.profilePicture }}  </a>
+                            <a href="{{ asset('uploads/profile_pictures/' ~ candidate.profilePicture)}}" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.profilePicture }}  </a>
                         </div>
                         {% endif %}
                         {# {{ endif }} #}
@@ -192,7 +193,7 @@
                             </div>
                             {% if app.user.candidate is not null and app.user.candidate.passport is not null %}
                             <div class="existing-file">
-                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.passport }}  </a>
+                                <a href="{{ asset('uploads/passport_files/' ~ candidate.passport)}}" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.passport }}  </a>
                             </div>
                             {% endif %}
                             <div class="file-path-wrapper">
@@ -211,7 +212,7 @@
 
                             {% if app.user.candidate is not null and app.user.candidate.curriculumVitae is not null %}
                             <div class="existing-file">
-                                <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.curriculumVitae }}  </a>
+                                <a href="{{ asset('uploads/cv_files/' ~ candidate.curriculumVitae)}}" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.curriculumVitae }}  </a>
                             </div>
                             {% endif %}
 
