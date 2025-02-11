@@ -8,6 +8,7 @@ use App\Form\CandidateType;
 use App\Form\RegistrationFormType;
 use App\Service\FileUploader;
 use App\Repository\CandidateRepository;
+use App\Service\CandidateCompletionCalculator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +20,13 @@ use function Symfony\Component\Clock\now;
 final class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(CandidateRepository $candidateRepository, Request $request, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    public function index(
+        CandidateRepository $candidateRepository,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        FileUploader $fileUploader,
+        CandidateCompletionCalculator $completionCalculator,
+    ): Response 
     {
 
         if (!$this->getUser()) {
@@ -31,24 +38,18 @@ final class ProfileController extends AbstractController
          */
         $user = $this->getUser();
 
-
         $candidate = $candidateRepository->findOneBy(["user" => $this->getUser()]);
-
-
-
         
         if ($candidate === null) {
-            
             $candidate = new Candidate();
             $candidate->setUser($user);
         }
 
-        if(!$user->isVerified())
-        {
-            return $this->render('errors/not-verified.html.twig', [
-
-            ]);
+        if(!$user->isVerified()) {
+            return $this->render('errors/not-verified.html.twig');
         }
+
+
 
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
@@ -88,9 +89,14 @@ final class ProfileController extends AbstractController
         }
 
 
+        // Completion rate for candidate
+
+        $completionRate = $completionCalculator->calculateCompletion($candidate);
+
         return $this->render('profile/profile.html.twig', [
             'candidateForm' => $form,
             'candidate' => $candidate,
+            'completionRate' => $completionRate,
             
         ]);
     }

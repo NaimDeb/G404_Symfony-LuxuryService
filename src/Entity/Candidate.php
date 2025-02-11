@@ -4,9 +4,8 @@ namespace App\Entity;
 use App\Repository\CandidateRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Attribute\ProfileCompletion;
 
 #[ORM\Entity(repositoryClass: CandidateRepository::class)]
 class Candidate
@@ -17,27 +16,35 @@ class Candidate
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $currentLocation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $placeOfBirth = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $shortDescription = null;
 
     #[ORM\Column(nullable: true)]
@@ -56,17 +63,21 @@ class Candidate
     private ?string $notes = null;
 
     #[ORM\ManyToOne]
+    #[ProfileCompletion]
     private ?Gender $gender = null;
 
     #[ORM\ManyToOne]
+    #[ProfileCompletion]
     private ?JobCategory $jobCategory = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ProfileCompletion]
     private ?\DateTimeInterface $birthDate = null;
 
 
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $experience = null;
 
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
@@ -74,12 +85,15 @@ class Candidate
     private ?User $user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $profilePicture = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $curriculumVitae = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[ProfileCompletion]
     private ?string $passport = null;
 
     public function __construct()
