@@ -119,7 +119,7 @@
                             {{ form_widget(candidateForm.profilePictureFile) }}
                         </div>
                         {# {{ if app.user.candidate.profilePictureFilename }} #}
-                        {% if app.user.candidate.profilePicture is not null %}
+                        {% if app.user.candidate is not null and app.user.candidate.profilePicture is not null %}
                         <div class="existing-file">
                             <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.profilePicture }}  </a>
                         </div>
@@ -183,7 +183,7 @@
                                 {{ form_errors(candidateForm.passportFile) }}
 
                             </div>
-                            {% if app.user.candidate.passport is not null %}
+                            {% if app.user.candidate is not null and app.user.candidate.passport is not null %}
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.passport }}  </a>
                             </div>
@@ -202,7 +202,7 @@
                                 {{ form_errors(candidateForm.curriculumVitaeFile) }}
                             </div>
 
-                            {% if app.user.candidate.curriculumVitae is not null %}
+                            {% if app.user.candidate is not null and app.user.candidate.curriculumVitae is not null %}
                             <div class="existing-file">
                                 <a href="#!" target="_blank"><i class="material-icons">&#xE24D;</i> {{ candidate.curriculumVitae }}  </a>
                             </div>
