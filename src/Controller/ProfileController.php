@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\CandidateType;
 use App\Form\RegistrationFormType;
 use App\Interfaces\FileHandlerInterface;
+use App\Interfaces\PasswordUpdaterInterface;
 use App\Service\FileUploader;
 use App\Repository\CandidateRepository;
 use App\Service\CandidateCompletionCalculator;
@@ -26,7 +27,8 @@ final class ProfileController extends AbstractController
         Request $request,
         EntityManagerInterface $entityManager,
         CandidateCompletionCalculator $completionCalculator,
-        FileHandlerInterface $fileHandler
+        FileHandlerInterface $fileHandler,
+        PasswordUpdaterInterface $passwordUpdater
     ): Response 
     {
 
@@ -72,6 +74,18 @@ final class ProfileController extends AbstractController
                 'curriculumVitae' => $form->get('curriculumVitaeFile')->getData(),
             ];
             $fileHandler->handleFiles($candidate, $files);
+
+
+            // Password and mail
+
+            $email = $form->get('email')->getData();
+            $newPassword = $form->get('newPassword')->getData();
+
+            if ($email && $newPassword) {
+                $passwordUpdater->updatePassword($user, $email, $newPassword);
+            } elseif ($email || $newPassword) {
+                $this->addFlash('danger', 'Email and password must be filled together to change password.');
+            }
 
 
             // Todo : password

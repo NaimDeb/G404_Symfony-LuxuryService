@@ -265,22 +265,22 @@
                 <div class="col-xs-12 col-sm-4">
                     <div class="input-field">
                         {# Email Field #}
-                        {# {{ form_widget(candidateForm.email) }} #}
-                        {# {{ form_label(candidateForm.email, 'Email') }} #}
+                        {{ form_widget(candidateForm.email) }}
+                        {{ form_label(candidateForm.email, 'Email') }}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-4">
                     <div class="input-field">
                         {# Password Field #}
-                        {# {{ form_widget(candidateForm.password) }} #}
-                        {# {{ form_label(candidateForm.password, 'Change your password here') }} #}
+                        {{ form_widget(candidateForm.newPassword.first) }}
+                        {{ form_label(candidateForm.newPassword.first, 'Change your password here') }}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-4">
                     <div class="input-field">
                         {# Password Repeat Field #}
-                        {# {{ form_widget(candidateForm.password_repeat) }} #}
-                        {# {{ form_label(candidateForm.password_repeat, 'Confirm your new password') }} #}
+                        {{ form_widget(candidateForm.newPassword.second) }}
+                        {{ form_label(candidateForm.newPassword.second, 'Confirm your new password') }}
                     </div>
                 </div>
             </div>
