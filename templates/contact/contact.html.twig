@@ -49,7 +49,7 @@
 		</section>
 
 		<!-- Page Content-->
-		<form method="POST" action="#!" accept-charset="UTF-8" id="formContact" class="light-gray-bg">
+		{{ form_start(form, {'attr': {'class': 'light-gray-bg', 'id': 'formContact', 'accept-charset': 'UTF-8'}}) }}
 			<input name="_token" type="hidden" value="">
 			<input name="job_id" type="hidden" value="">
 			<section class="section-padding">
@@ -68,46 +68,41 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="input-field">
-										<input required="required" name="firstname" type="text">
-										<label for="firstname">
-											First name
-										</label>
+										{{form_errors(form.firstName)}}
+										{{form_widget(form.firstName)}}
+										{{form_label(form.firstName)}}
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="input-field">
-										<input required="required" name="lastname" type="text">
-										<label for="lastname">
-											Last name
-										</label>
+										{{form_errors(form.lastName)}}
+										{{form_widget(form.lastName)}}
+										{{form_label(form.lastName)}}
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="input-field">
-										<input required="required" name="email" type="email">
-										<label for="email">
-											Email
-										</label>
+										{{form_errors(form.email)}}
+										{{form_widget(form.email)}}
+										{{form_label(form.email)}}
 									</div>
 								</div>
 								<div class="col-md-6">
 									<div class="input-field">
-										<input required="required" name="phone" type="tel">
-										<label for="phone">
-											Phone Number
-										</label>
+										{{form_errors(form.phoneNumber)}}
+										{{form_widget(form.phoneNumber)}}
+										{{form_label(form.phoneNumber)}}
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<div class="input-field">
-										<textarea class="materialize-textarea" required="required" name="message" cols="50" rows="10"></textarea>
-										<label for="message">
-											Message
-										</label>
+										{{form_errors(form.message)}}
+									{{form_widget(form.message)}}
+									{{form_label(form.message)}}
 									</div>
 								</div>
 							</div>
@@ -162,7 +157,7 @@
 					</div>
 				</div>
 			</section>
-		</form>
+		{{form_end(form)}}
 
 		<div id="map" style="height: 350px;">
 

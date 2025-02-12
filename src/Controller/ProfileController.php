@@ -118,6 +118,13 @@ final class ProfileController extends AbstractController
 
     }
 
+    // #[Route('/delete_account/{token}', name: 'delete_account')]
+    // public function index() {
+        
+    // }
+
+
+
     private function getOriginalFilename(?string $filename): ?string
     {
         return $filename ? preg_replace('/-\w{13}(?=\.\w{3,4}$)/', '', $filename) : null;
