@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use App\Repository\CandidateRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -96,9 +98,30 @@ class Candidate
     #[ProfileCompletion]
     private ?string $passport = null;
 
+    /**
+     * @var Collection<int, JobApplication>
+     */
+    #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'candidate', orphanRemoval: true)]
+    private Collection $jobApplications;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->jobApplications = new ArrayCollection();
+    }
+
+
+    public function __toString(): string
+    {
+        $firstName = $this->getFirstName();
+        $lastName = $this->getLastName();
+
+        if(empty($firstName) && empty($lastName)) {
+            $mail = $this->getUser()->getEmail();
+            return $mail;
+        }
+
+        return $firstName.' '.$lastName;
     }
 
 
@@ -357,6 +380,36 @@ class Candidate
     public function setPassport(?string $passport): static
     {
         $this->passport = $passport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, JobApplication>
+     */
+    public function getJobApplications(): Collection
+    {
+        return $this->jobApplications;
+    }
+
+    public function addJobApplication(JobApplication $jobApplication): static
+    {
+        if (!$this->jobApplications->contains($jobApplication)) {
+            $this->jobApplications->add($jobApplication);
+            $jobApplication->setCandidate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobApplication(JobApplication $jobApplication): static
+    {
+        if ($this->jobApplications->removeElement($jobApplication)) {
+            // set the owning side to null (unless already changed)
+            if ($jobApplication->getCandidate() === $this) {
+                $jobApplication->setCandidate(null);
+            }
+        }
 
         return $this;
     }

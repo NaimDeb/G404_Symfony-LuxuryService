@@ -3,7 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Gender;
+use App\Entity\JobApplication;
 use App\Entity\JobCategory;
+use App\Entity\JobOffer;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -41,6 +43,7 @@ class AppFixtures extends Fixture
             $jobCategoryClass->setName($jobCategory);
             $manager->persist($jobCategoryClass);
         }
+
 
         $manager->flush();
     }
