@@ -161,7 +161,7 @@ class CandidateType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new File([
+                        new File([
                         'maxSize' => '20M',
                         'mimeTypes' => [
                             'image/jpeg',

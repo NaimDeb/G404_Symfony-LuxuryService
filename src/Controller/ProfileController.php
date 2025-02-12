@@ -91,6 +91,7 @@ final class ProfileController extends AbstractController
             // Todo : password
 
             $candidate->setUpdatedAt(new \DateTimeImmutable());
+            
             $entityManager->persist($candidate);
             $entityManager->flush();
             $this->addFlash('success', "Your profile has been updated!");
