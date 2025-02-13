@@ -75,9 +75,7 @@ final class JobApplicationController extends AbstractController
 
 
         
-
-        return $this->render('job_application/index.html.twig', [
-            'controller_name' => 'JobApplicationController',
-        ]);
+        // Redirect back
+        return $this->redirect($request->headers->get('referer'));
     }
 }
