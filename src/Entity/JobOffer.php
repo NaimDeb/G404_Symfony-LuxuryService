@@ -48,10 +48,14 @@ class JobOffer
     #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'jobOffer')]
     private Collection $jobApplications;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->jobApplications = new ArrayCollection();
+
     }
 
 public function __toString(): string
@@ -199,6 +203,18 @@ public function __toString(): string
                 $jobApplication->setJobOffer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

@@ -21,7 +21,6 @@ class JobApplicationCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
             AssociationField::new('candidate')->autocomplete(),
             AssociationField::new('jobOffer')->autocomplete(),
             DateTimeField::new('createdAt')->hideOnForm(),

@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class JobOfferCrudController extends AbstractCrudController
 {
@@ -37,5 +38,4 @@ class JobOfferCrudController extends AbstractCrudController
             DateTimeField::new('createdAt')->hideOnForm(),
         ];
     }
-    
 }

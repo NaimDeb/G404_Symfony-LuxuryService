@@ -101,7 +101,7 @@ class Candidate
     /**
      * @var Collection<int, JobApplication>
      */
-    #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'candidate', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: JobApplication::class, mappedBy: 'candidate', orphanRemoval: true, cascade:["persist"])]
     private Collection $jobApplications;
 
     public function __construct()

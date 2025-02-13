@@ -85,6 +85,9 @@ class UserCrudController extends AbstractCrudController
                 return;
             }
 
+            /**
+             * @var User
+             */
             $user = $this->getUser();
 
             $hash = $this->userPasswordHasher->hashPassword($user, $password);

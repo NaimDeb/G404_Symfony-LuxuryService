@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\JobOffer;
+use App\Repository\JobApplicationRepository;
 use App\Repository\JobCategoryRepository;
 use App\Repository\JobOfferRepository;
+use App\Service\CandidateCompletionCalculator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,21 +32,39 @@ final class JobController extends AbstractController
         ]);
     }
     
-    #[Route('/job/show/{id}', name: 'app_job_show')]
-    public function show(JobOffer $offer): Response
+    #[Route('/job/show/{slug}-{id}', name: 'app_job_show')]
+    public function show(JobOffer $offer, CandidateCompletionCalculator $completionCalculator, JobApplicationRepository $applicationRepository, JobCategoryRepository $categoryRepository ): Response
     {
-
-        
-
-
-
+        /** @var User */
         $user = $this->getUser();
+
+        if(!$user){
+            return $this->redirectToRoute('app_login');
+        }
+
+        $candidate = $user->getCandidate();
+
+
+
+        // Check if the user has already applied for this offer
+        $isApplied = $applicationRepository->findOneBy([
+            'candidate' => $candidate,
+            'jobOffer' => $offer
+        ]) !== null;
+
+
+
+        $completionRate = $completionCalculator->calculateCompletion($candidate);
+
+        // Todo: previous and next buttons
 
 
         return $this->render('jobs/show.html.twig', [
             "user" => $user,
-            "offers" => $offer
+            "offer" => $offer,
+            "isApplied" => $isApplied,
+            "completionRate" => $completionRate
+
         ]);
     }
-
 }
