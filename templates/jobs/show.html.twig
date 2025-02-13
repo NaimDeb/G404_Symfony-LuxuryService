@@ -19,9 +19,14 @@
                         <ol class="breadcrumb">
                             <li>
                                 <div class="portfolio-nav">
-                                    <a href="#!" class="waves-effect waves-dark"><i class="fa fa-angle-left" aria-hidden="true"></i> Prev</a>
-                                    <a href="#!" class="waves-effect waves-dark"><i class="fa fa-th-large" aria-hidden="true"></i></a>
-                                    <a href="#!" class="waves-effect waves-dark">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                {% if previousOffer %}
+                                    <a href="{{path("app_job_show", {slug: previousOffer.slug, id: previousOffer.id})}}" class="waves-effect waves-dark"><i class="fa fa-angle-left" aria-hidden="true"></i> Prev</a>
+                                {% endif %}    
+                                    <a href="{{path("app_job")}}" class="waves-effect waves-dark"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                                {% if nextOffer %}
+                                    <a href="{{path("app_job_show", {slug: nextOffer.slug, id: nextOffer.id})}}" class="waves-effect waves-dark">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                {% endif %}
+                                
                                 </div>
                             </li>
                         </ol>
