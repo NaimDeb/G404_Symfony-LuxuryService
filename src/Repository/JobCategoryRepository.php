@@ -47,7 +47,7 @@ class JobCategoryRepository extends ServiceEntityRepository
             // ORDER BY jobOffer.createdAt ASC
             ->orderBy('jobOffer.createdAt', 'ASC');
 
-        // On clone le querybuilder  
+        // On clone le querybuilder w 
         $previousOfferQb = clone $qb;
         // On récupère l'offre précédente
         $previousOffer = $previousOfferQb->andWhere('jobOffer.createdAt < :currentOfferDate')
