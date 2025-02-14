@@ -14,15 +14,16 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class JobController extends AbstractController
 {
-    #[Route('/job', name: 'app_job')]
-    public function index(JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository): Response
+    #[Route('/jobs/{page<\d+>?1}', name: 'app_job')]
+    public function index(int $page, JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository): Response
     {
 
-        $jobOffers = $jobOfferRepository->findAll();
+        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
 
         $jobCategories = $jobCategoryRepository->findAll();
 
         $user = $this->getUser();
+
 
         return $this->render('jobs/index.html.twig', [
 
@@ -55,6 +56,8 @@ final class JobController extends AbstractController
 
 
         $completionRate = $completionCalculator->calculateCompletion($candidate);
+
+        
 
 
         /** @var JobOfferLinkDTO */

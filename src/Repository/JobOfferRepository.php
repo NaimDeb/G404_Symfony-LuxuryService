@@ -28,37 +28,51 @@ class JobOfferRepository extends ServiceEntityRepository
         $offset = ($paginationPage - 1) * $numberOfResults;
         
         
-        $qb = $this->createQueryBuilder('jobOffers')
-            ->select('NEW App\\DTO\\JobOfferCardDTO(
-                jobOffers.id,
-                offer.slug as categorySlug,
-                COALESCE(SUBSTRING(jobOffers.description, 1, 100), \'Pas de description\') AS description,
-                jobOffers.jobTitle,
-                jobOffers.location,
-                jobOffers.salary,
-                jobOffers.createdAt,
-                jobOffers.slug
-            )')
-            ->join('jobOffers.category', 'offer')
-            ->where('jobOffers.isActive = :active')
-            ->setParameter('active', true)
-            ->setMaxResults($numberOfResults)
-            ->setFirstResult($offset)
-            ->orderBy('jobOffers.createdAt' , 'DESC')
-            ;
-            
-            // Not here, since it doesn't get anything even when you're logged out
-            if ($candidateId) {
-                return $qb
-            ->leftJoin('jobOffers.jobApplications', 'jobApp')
-            ->addSelect('CASE WHEN jobApp.candidate IS :candidateId THEN true ELSE false END as isApplied')
-            ->setParameter('candidateId', $candidateId)
-            ->getQuery()
-            ->getResult();
-            }
-
-
-        return $qb->getQuery()->getResult(  );
+        if ($candidateId) {
+            // When a candidate is provided, use the CASE expression directly in the constructor.
+            $qb = $this->createQueryBuilder('jobOffers')
+                ->select('NEW App\\DTO\\JobOfferCardDTO(
+                    jobOffers.id,
+                    offer.slug as categorySlug,
+                    COALESCE(SUBSTRING(jobOffers.description, 1, 100), \'Pas de description\') AS description,
+                    jobOffers.jobTitle,
+                    jobOffers.location,
+                    jobOffers.salary,
+                    jobOffers.createdAt,
+                    jobOffers.slug,
+                    CASE WHEN jobApp.candidate = :candidateId THEN true ELSE false END
+                )')
+                ->join('jobOffers.category', 'offer')
+                ->leftJoin('jobOffers.jobApplications', 'jobApp')
+                ->where('jobOffers.isActive = :active')
+                ->setParameter('active', true)
+                ->setParameter('candidateId', $candidateId)
+                ->setMaxResults($numberOfResults)
+                ->setFirstResult($offset)
+                ->orderBy('jobOffers.createdAt', 'DESC');
+        } else {
+            // When no candidate is provided, simply set isApplied to false.
+            $qb = $this->createQueryBuilder('jobOffers')
+                ->select('NEW App\\DTO\\JobOfferCardDTO(
+                    jobOffers.id,
+                    offer.slug as categorySlug,
+                    COALESCE(SUBSTRING(jobOffers.description, 1, 100), \'Pas de description\') AS description,
+                    jobOffers.jobTitle,
+                    jobOffers.location,
+                    jobOffers.salary,
+                    jobOffers.createdAt,
+                    jobOffers.slug,
+                    false
+                )')
+                ->join('jobOffers.category', 'offer')
+                ->where('jobOffers.isActive = :active')
+                ->setParameter('active', true)
+                ->setMaxResults($numberOfResults)
+                ->setFirstResult($offset)
+                ->orderBy('jobOffers.createdAt', 'DESC');
+        }
+        
+        return $qb->getQuery()->getResult();
 
 
 
