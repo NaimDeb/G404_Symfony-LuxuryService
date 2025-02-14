@@ -6,5 +6,5 @@ use App\Entity\Candidate;
 
 interface CandidateCompletionCalculatorInterface
 {
-    public function calculateCompletion(Candidate $candidate): int;
+    public function calculateCompletion(Candidate $candidate) : int;
 }

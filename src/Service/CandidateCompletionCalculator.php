@@ -10,7 +10,7 @@ use ReflectionClass;
 use App\Interfaces\CandidateCompletionCalculatorInterface;
 
 
-class CandidateCompletionCalculator extends CandidateCompletionCalculatorInterface {
+class CandidateCompletionCalculator implements CandidateCompletionCalculatorInterface {
 
     private ReflectionClass $reflection;
 
