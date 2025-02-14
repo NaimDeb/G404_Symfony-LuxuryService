@@ -18,9 +18,11 @@ final class JobController extends AbstractController
     public function index(int $page, JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository): Response
     {
 
-        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
-
         $jobCategories = $jobCategoryRepository->findAll();
+
+        // Todo : ajax pagination
+        
+        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
 
         $user = $this->getUser();
 
