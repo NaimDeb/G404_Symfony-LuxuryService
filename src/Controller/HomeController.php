@@ -19,7 +19,8 @@ final class HomeController extends AbstractController
 
         $jobCategories = $jobCategoryRepository->findAll();
 
-        
+
+        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(6, 1, user: $this->getUser());
 
 
         $user = $this->getUser();
