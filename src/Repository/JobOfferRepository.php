@@ -7,16 +7,25 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\DTO\JobOfferCardDTO;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<JobOffer>
  */
 class JobOfferRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, JobOffer::class);
     }
+
+    // public function paginateJobOffers(int $page, int $limit) {
+    //     return $this->paginator->paginate(
+    //         $this->getJob
+
+    //     )
+    // }
+    
 
     public function getJobOffersWithApplicationStatus(int $numberOfResults, int $paginationPage = 1, ?User $user = null) {
 
@@ -71,8 +80,14 @@ class JobOfferRepository extends ServiceEntityRepository
                 ->setFirstResult($offset)
                 ->orderBy('jobOffers.createdAt', 'DESC');
         }
-        
-        return $qb->getQuery()->getResult();
+
+        $pagination = $this->paginator->paginate(
+            $qb,
+            $paginationPage,
+            $numberOfResults
+        );
+    
+        return $pagination;
 
 
 
