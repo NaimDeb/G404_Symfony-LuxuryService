@@ -19,6 +19,8 @@ final class HomeController extends AbstractController
 
         $jobCategories = $jobCategoryRepository->findAll();
 
+        
+
 
         $user = $this->getUser();
         return $this->render('home/index.html.twig', [

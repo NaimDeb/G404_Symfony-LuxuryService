@@ -54,6 +54,9 @@ final class ProfileController extends AbstractController
         }
 
 
+        // Completion rate for candidate
+
+        $completionRate = $completionCalculator->calculateCompletion($candidate);
 
 
         $form = $this->createForm(CandidateType::class, $candidate);
@@ -91,6 +94,9 @@ final class ProfileController extends AbstractController
             // Todo : password
 
             $candidate->setUpdatedAt(new \DateTimeImmutable());
+
+            // Recalculate completion rate
+            // $this->setCandidateStatus($user, $completionRate, $entityManager);
             
             $entityManager->persist($candidate);
             $entityManager->flush();
@@ -99,11 +105,6 @@ final class ProfileController extends AbstractController
 
             return $this->redirectToRoute("app_profile");
         }
-
-
-        // Completion rate for candidate
-
-        $completionRate = $completionCalculator->calculateCompletion($candidate);
 
         return $this->render('profile/profile.html.twig', [
             'candidateForm' => $form,
@@ -130,4 +131,24 @@ final class ProfileController extends AbstractController
     {
         return $filename ? preg_replace('/-\w{13}(?=\.\w{3,4}$)/', '', $filename) : null;
     }
+
+
+    // Give role to user if needed
+    // private function setCandidateStatus(User $user, EntityManagerInterface $entityManager) {
+
+    //     $userRoles = $user->getRoles();	
+
+        
+
+    //     if ($completionRate === 100 && !in_array('ROLE_CANDIDATE', $userRoles, true)) {
+    //         $user->addRole('ROLE_CANDIDATE');
+    //     }
+    //     else if ($completionRate < 100 && in_array('ROLE_CANDIDATE', $userRoles, true)) {
+    //         $user->removeRole('ROLE_CANDIDATE');
+    //     }
+
+    //     // dd($completionRate, in_array('ROLE_CANDIDATE', $userRoles, true), $userRoles );
+
+    //     $entityManager->persist($user);
+    // }
 }
