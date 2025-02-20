@@ -27,6 +27,60 @@ class JobOfferRepository extends ServiceEntityRepository
     // }
     
 
+    public function getAllJobOffersWithApplicationStatus(?User $user = null) {
+
+
+        // Checks if user is logged (else null), gets Candidate (if null, returns null), gets Id
+        $candidateId = $user ? ($user->getCandidate()?->getId() ?? null) : null;
+
+
+        
+        
+        if ($candidateId) {
+            // When a candidate is provided, use the CASE expression directly in the constructor.
+            $qb = $this->createQueryBuilder('jobOffers')
+                ->select('NEW App\\DTO\\JobOfferCardDTO(
+                    jobOffers.id,
+                    offer.slug as categorySlug,
+                    COALESCE(SUBSTRING(jobOffers.description, 1, 100), \'Pas de description\') AS description,
+                    jobOffers.jobTitle,
+                    jobOffers.location,
+                    jobOffers.salary,
+                    jobOffers.createdAt,
+                    jobOffers.slug,
+                    CASE WHEN jobApp.candidate = :candidateId THEN true ELSE false END
+                )')
+                ->join('jobOffers.category', 'offer')
+                ->leftJoin('jobOffers.jobApplications', 'jobApp')
+                ->where('jobOffers.isActive = :active')
+                ->setParameter('active', true)
+                ->setParameter('candidateId', $candidateId)
+                ->orderBy('jobOffers.createdAt', 'DESC');
+        } else {
+            // When no candidate is provided, simply set isApplied to false.
+            $qb = $this->createQueryBuilder('jobOffers')
+                ->select('NEW App\\DTO\\JobOfferCardDTO(
+                    jobOffers.id,
+                    offer.slug as categorySlug,
+                    COALESCE(SUBSTRING(jobOffers.description, 1, 100), \'Pas de description\') AS description,
+                    jobOffers.jobTitle,
+                    jobOffers.location,
+                    jobOffers.salary,
+                    jobOffers.createdAt,
+                    jobOffers.slug,
+                    false
+                )')
+                ->join('jobOffers.category', 'offer')
+                ->where('jobOffers.isActive = :active')
+                ->setParameter('active', true)
+                ->orderBy('jobOffers.createdAt', 'DESC');
+        }
+
+        return $qb;
+
+
+
+    }
     public function getJobOffersWithApplicationStatus(int $numberOfResults, int $paginationPage = 1, ?User $user = null) {
 
 
@@ -81,14 +135,8 @@ class JobOfferRepository extends ServiceEntityRepository
                 ->setFirstResult($offset)
                 ->orderBy('jobOffers.createdAt', 'DESC');
         }
-
-        $pagination = $this->paginator->paginate(
-            $qb,
-            $paginationPage,
-            $numberOfResults
-        );
     
-        return $pagination;
+        return $qb;
 
 
 

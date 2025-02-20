@@ -8,6 +8,7 @@ use App\Repository\JobCategoryRepository;
 use App\Repository\JobOfferRepository;
 use App\Service\CandidateCompletionCalculator;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 final class JobController extends AbstractController
 {
     #[Route('/jobs', name: 'app_job')]
-    public function index(JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository, Request $request): Response
+    public function index(JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
         $jobCategories = $jobCategoryRepository->findAll();
@@ -25,9 +26,17 @@ final class JobController extends AbstractController
         
         
         $page = $request->query->getInt('page', 1);
+
+        $allJobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
+
+        $pagination = $paginator->paginate(
+            $allJobOffers,
+            $request->query->getInt('page', 1),
+            10
+        );
         
         $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
-        $maxPage = ceil($jobOffers->count() / 10);
+        // $maxPage = ceil($jobOffers->count() / 10);
 
         $user = $this->getUser();
 
@@ -37,7 +46,8 @@ final class JobController extends AbstractController
             "user" => $user,
             "categories" => $jobCategories,
             "offers" => $jobOffers,
-            'maxPage' => $maxPage,
+            'pagination' => $pagination,
+            // 'maxPage' => $maxPage,
             'page' => $page
         ]);
     }

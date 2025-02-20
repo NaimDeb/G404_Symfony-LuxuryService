@@ -46,7 +46,7 @@
                     <div class="portfolio portfolio-with-title col-2 gutter mt-30">
 
                 {# Offers #}
-                        {% for offer in offers %}
+                        {% for offer in pagination %}
 
                         
                             
@@ -87,12 +87,14 @@
 
                         {% endfor %}
 
-                        {{ knp_pagination_render(offers) }}
                         
 
                         <div class="no-item"></div>
                     </div>
                 </div>
+                    <div class="text-center">
+					{{ knp_pagination_render(pagination) }}
+					</div>
             </div>
         </section>
 
