@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Candidate;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -35,7 +36,7 @@ class CandidateCrudController extends AbstractCrudController
             DateTimeField::new('deletedAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
             BooleanField::new('availibility'),
-            TextField::new('birthDate'),
+            DateField::new('birthDate'),
             TextField::new('experience'),
             TextField::new('profilePicture'),
             TextField::new('curriculumVitae'),

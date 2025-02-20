@@ -31,8 +31,10 @@ final class JobApplicationController extends AbstractController
 
         $jobOffer = $entityManager->getRepository(JobOffer::class)->findOneBy(['id' => $request->query->get('id')]);
 
+        $completionRate = $completionCalculator->calculateCompletion($candidate);
+
         // Failsafe if user is not a candidate (don't care for admin)
-        if (!$candidate || !in_array('ROLE_CANDIDATE', $userRoles) && !in_array('ROLE_ADMIN', $userRoles)) {
+        if (!$candidate || $completionRate < 100 && !in_array('ROLE_ADMIN', $userRoles)) {
             $this->addFlash("error", "You are not a candidate");
             return $this->redirectToRoute('app_profile'); 
         }

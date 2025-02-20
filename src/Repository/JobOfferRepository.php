@@ -29,10 +29,11 @@ class JobOfferRepository extends ServiceEntityRepository
 
     public function getJobOffersWithApplicationStatus(int $numberOfResults, int $paginationPage = 1, ?User $user = null) {
 
-        if ($user !== null) {
-            $candidateId = $user->getCandidate()->getId();
-        } else 
-        { $candidateId = null; }
+
+        // Checks if user is logged (else null), gets Candidate (if null, returns null), gets Id
+        $candidateId = $user ? ($user->getCandidate()?->getId() ?? null) : null;
+
+
 
         $offset = ($paginationPage - 1) * $numberOfResults;
         

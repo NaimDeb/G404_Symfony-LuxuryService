@@ -16,10 +16,10 @@ class ClientCrudController extends AbstractCrudController
         return Client::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField::new('id')->hideOnForm(),
             TextField::new('companyName'),
             AssociationField::new('user')->autocomplete(),
             TextEditorField::new('notes'),
@@ -28,5 +28,4 @@ class ClientCrudController extends AbstractCrudController
             TextField::new('phoneNumber'),
         ];
     }
-
 }

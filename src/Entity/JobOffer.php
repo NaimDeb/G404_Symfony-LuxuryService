@@ -51,6 +51,9 @@ class JobOffer
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\ManyToOne(inversedBy: 'jobOffers')]
+    private ?Client $client = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -215,6 +218,18 @@ public function __toString(): string
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): static
+    {
+        $this->client = $client;
 
         return $this;
     }

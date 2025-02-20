@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Recruiter;
 
 use App\Entity\Client;
 use App\Entity\User;
@@ -21,7 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserCrudController extends AbstractCrudController
+class RecruiterUserCrudController extends AbstractCrudController
 {
 
     public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
@@ -43,31 +43,28 @@ class UserCrudController extends AbstractCrudController
             ->setPagetitle(Crud::PAGE_NEW, 'New Recruiter');
     }
 
-    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
 
         if ($entityInstance instanceof User) {
-            $entityInstance->setRoles(['ROLE_CLIENT']);
-            $entityInstance->setIsVerified(true);
             $this->hashPassword($entityInstance);
-
-
-            $client = new Client();
-            $client->setUser($entityInstance);
-            $entityManager->persist($client);
         }
 
-        parent::persistEntity($entityManager, $entityInstance);
+        parent::updateEntity($entityManager, $entityInstance);
     }
 
 
-    // Override index
+
+    // Override index (filter)
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $queryBuilder = $this->container->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
-        $queryBuilder->andWhere("entity.roles LIKE :role")
-            ->setParameter('role', '%ROLE_CLIENT%');
+        /** @var User */
+        $user = $this->getUser();
+
+        $queryBuilder->andWhere("entity.id LIKE :id")
+            ->setParameter('id', $user->getId());
 
         return $queryBuilder;
     }
@@ -96,3 +93,4 @@ class UserCrudController extends AbstractCrudController
 
     
 }
+

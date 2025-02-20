@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ClientRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
@@ -31,6 +33,23 @@ class Client
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $notes = null;
+
+    /**
+     * @var Collection<int, JobOffer>
+     */
+    #[ORM\OneToMany(targetEntity: JobOffer::class, mappedBy: 'client')]
+    private Collection $jobOffers;
+
+    public function __construct()
+    {
+        $this->jobOffers = new ArrayCollection();
+    }
+
+public function __toString(): string
+{
+    return $this->companyName ?? 'N/A';
+}
+
 
     public function getId(): ?int
     {
@@ -105,6 +124,36 @@ class Client
     public function setNotes(?string $notes): static
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, JobOffer>
+     */
+    public function getJobOffers(): Collection
+    {
+        return $this->jobOffers;
+    }
+
+    public function addJobOffer(JobOffer $jobOffer): static
+    {
+        if (!$this->jobOffers->contains($jobOffer)) {
+            $this->jobOffers->add($jobOffer);
+            $jobOffer->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJobOffer(JobOffer $jobOffer): static
+    {
+        if ($this->jobOffers->removeElement($jobOffer)) {
+            // set the owning side to null (unless already changed)
+            if ($jobOffer->getClient() === $this) {
+                $jobOffer->setClient(null);
+            }
+        }
 
         return $this;
     }
