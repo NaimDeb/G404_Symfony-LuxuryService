@@ -12,6 +12,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
+
+    
     
     private SluggerInterface $slugger;
     private EntityManagerInterface $entityManager;
