@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <section class="section-padding gray-bg log-section" style="display: flex; justify-content: center; align-items: center; padding-top: 200px;">
+        <div class="container">
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div class="col-xs-12 col-sm-6 col-md-4">
+                    <div class="card card-panel">
+                        <h3 class="text-extrabold">There was an error in the page :(</h3>
+                        <p>We are sorry for any inconvenience</p>
+
+                        <div class="text-center mt-4">
+                            <a href="{{ path('app_home') }}" class="btn btn-primary">
+                                <i class="fa fa-home"></i> Go Back Home
+                            </a>
+                        </div>
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

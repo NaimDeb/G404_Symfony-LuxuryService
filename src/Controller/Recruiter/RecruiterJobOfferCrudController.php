@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class RecruiterJobOfferCrudController extends AbstractCrudController
@@ -60,7 +61,7 @@ class RecruiterJobOfferCrudController extends AbstractCrudController
             BooleanField::new('isActive', 'is_active'),
             AssociationField::new('category')->autocomplete(),
             TextField::new('jobType', 'Job Type'),
-            TextEditorField::new('description'),
+            TextEditorField::new('description')->setFormType(TextareaType::class),
             TextField::new('location'),
             NumberField::new('salary'),
             DateTimeField::new('createdAt', 'created_at')->setFormTypeOption('disabled', true),
