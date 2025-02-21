@@ -17,6 +17,8 @@
 
 {% block body %}
 
+
+
 		<!-- RS5.0 Core JS Files -->
 
         <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems! The following part can be removed on Server for On Demand Loading) -->
@@ -287,6 +289,7 @@
                     <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                     {# ITEMS #}
                     {% for offer in offers %}
+                    
 
             
                         <div class="portfolio-item" data-groups='["all", "{{offer.categorySlug}}"]'>
@@ -334,7 +337,7 @@
                     </div>
 
                     <div class="text-center">
-                        <a href={{ path('app_job', {page: 1}) }} class="btn gradient secondary waves-effect waves-light mt-30">View all job offers</a>
+                        <a href={{ path('app_job')}} class="btn gradient secondary waves-effect waves-light mt-30">View all job offers</a>
                     </div>
                 </div>
             </div>

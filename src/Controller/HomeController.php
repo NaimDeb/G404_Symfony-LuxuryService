@@ -15,12 +15,11 @@ final class HomeController extends AbstractController
     public function index(JobOfferRepository $jobOfferRepository, JobCategoryRepository $jobCategoryRepository): Response
     {
 
-        $jobOffers = $jobOfferRepository->findAll();
-
         $jobCategories = $jobCategoryRepository->findAll();
 
 
-        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(6, 1, user: $this->getUser());
+        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(6, user: $this->getUser());
+
 
 
         $user = $this->getUser();

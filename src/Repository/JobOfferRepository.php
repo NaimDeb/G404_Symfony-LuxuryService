@@ -54,7 +54,7 @@ class JobOfferRepository extends ServiceEntityRepository
                 ->leftJoin('jobOffers.jobApplications', 'jobApp')
                 ->where('jobOffers.isActive = :active')
                 ->setParameter('active', true)
-                ->setParameter('candidateId', $candidateId)
+                ->setParameter('candidateId', $candidateId)->setMaxResults(30)
                 ->orderBy('jobOffers.createdAt', 'DESC');
         } else {
             // When no candidate is provided, simply set isApplied to false.
@@ -73,6 +73,7 @@ class JobOfferRepository extends ServiceEntityRepository
                 ->join('jobOffers.category', 'offer')
                 ->where('jobOffers.isActive = :active')
                 ->setParameter('active', true)
+                ->setMaxResults(30)
                 ->orderBy('jobOffers.createdAt', 'DESC');
         }
 
@@ -136,7 +137,7 @@ class JobOfferRepository extends ServiceEntityRepository
                 ->orderBy('jobOffers.createdAt', 'DESC');
         }
     
-        return $qb;
+        return $qb->getQuery()->getResult();
 
 
 

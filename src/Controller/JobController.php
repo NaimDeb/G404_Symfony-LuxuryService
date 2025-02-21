@@ -25,9 +25,13 @@ final class JobController extends AbstractController
         // Todo : ajax pagination
         
         
-        $page = $request->query->getInt('page', 1);
+        // $page = $request->query->getInt('page', 1);
 
-        $allJobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
+        // $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
+        // $maxPage = ceil($jobOffers->count() / 10);
+
+
+        $allJobOffers = $jobOfferRepository->getAllJobOffersWithApplicationStatus(user: $this->getUser());
 
         $pagination = $paginator->paginate(
             $allJobOffers,
@@ -35,8 +39,6 @@ final class JobController extends AbstractController
             10
         );
         
-        $jobOffers = $jobOfferRepository->getJobOffersWithApplicationStatus(10, $page, user: $this->getUser());
-        // $maxPage = ceil($jobOffers->count() / 10);
 
         $user = $this->getUser();
 
@@ -45,10 +47,10 @@ final class JobController extends AbstractController
 
             "user" => $user,
             "categories" => $jobCategories,
-            "offers" => $jobOffers,
             'pagination' => $pagination,
+            // "offers" => $jobOffers,
             // 'maxPage' => $maxPage,
-            'page' => $page
+            // 'page' => $page
         ]);
     }
     
@@ -93,7 +95,6 @@ final class JobController extends AbstractController
             "completionRate" => $completionRate,
             "nextOffer" => $nextOffer,
             "previousOffer" => $previousOffer
-
         ]);
     }
 }

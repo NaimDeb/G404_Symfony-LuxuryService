@@ -56,18 +56,18 @@ class PasswordUpdater implements PasswordUpdaterInterface{
 
         // Todo : voir les mails
         // On envoie un mail
-        // try {
-        //     $mail = (new TemplatedEmail())
-        //         ->from('support@luxury-services.com')
-        //         ->to($user->getEmail())
-        //         ->subject('Change of password')
-        //         ->htmlTemplate('emails/change-password.html.twig');
+        try {
+            $mail = (new TemplatedEmail())
+                ->from('support@luxury-services.com')
+                ->to($user->getEmail())
+                ->subject('Change of password')
+                ->htmlTemplate('emails/change-password.html.twig');
 
-        //     $this->mailer->send($mail);
+            $this->mailer->send($mail);
             $flashBag->add('success', 'Your password has been changed successfully!');
-        // } catch (\Exception $e) {
-        //     $flashBag->add('danger', 'An error occurred while sending the message: ' . $e->getMessage());
-        // }
+        } catch (\Exception $e) {
+            $flashBag->add('danger', 'An error occurred while sending the message: ' . $e->getMessage());
+        }
     }
 }
 
