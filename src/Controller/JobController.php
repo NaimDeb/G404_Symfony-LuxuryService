@@ -74,9 +74,11 @@ final class JobController extends AbstractController
         ]) !== null;
 
 
-
-        $completionRate = $completionCalculator->calculateCompletion($candidate);
-
+        if ($candidate !== null) {
+            $completionRate = $completionCalculator->calculateCompletion($candidate);
+        } else {
+            $completionRate = 0;
+        }
         
 
 
