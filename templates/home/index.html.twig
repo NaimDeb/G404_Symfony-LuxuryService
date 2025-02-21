@@ -10,7 +10,7 @@
 
 
 {% block favicon %}
-	./assets/img/luxury-services-logo.png
+	{{ asset('img/luxury-services')}}-logo.png
 {% endblock favicon %}
 
 
@@ -32,7 +32,7 @@
                     <li data-transition="parallaxtoleft" data-slotamount="default"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000" data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off">
 
                         <!-- MAIN IMAGE -->
-                        <img src="./assets/img/bg1.jpg"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+                        <img src="{{ asset('img/bg1.jpg')}}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 
                         <!-- LAYER NR. 1 -->
                         <div class="tp-caption rev-heading tp-resizeme"
@@ -107,7 +107,7 @@
                     <li data-transition="parallaxtoleft" data-slotamount="default"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000" data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off">
 
                         <!-- MAIN IMAGE -->
-                        <img src="./assets/img/bg3.jpg"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
+                        <img src="{{ asset('img/bg3.jpg')}}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
 
                         <!-- LAYER NR. 1 -->
                         <div class="tp-caption rev-heading tp-resizeme"
@@ -221,10 +221,10 @@
 
                             <div class="carousel-inner" role="listbox">
                                 <div class="item active">
-                                    <img class="img-responsive" src="./assets/img/slide1.jpg" alt="">
+                                    <img class="img-responsive" src="{{ asset('img/slide1.jpg')}}" alt="">
                                 </div>
                                 <div class="item">
-                                    <img class="img-responsive" src="./assets/img/slide2.jpg" alt="">
+                                    <img class="img-responsive" src="{{ asset('img/slide2.jpg')}}" alt="">
                                 </div>
                             </div>
 
@@ -418,3 +418,4 @@
     });
 </script>
 {% endblock deferscripts %}
+
