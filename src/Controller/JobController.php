@@ -22,7 +22,6 @@ final class JobController extends AbstractController
 
         $jobCategories = $jobCategoryRepository->findAll();
 
-        // Todo : ajax pagination
         
         
         // $page = $request->query->getInt('page', 1);

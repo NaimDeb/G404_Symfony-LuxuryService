@@ -45,7 +45,6 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/recruiter, roles: ROLE_CLIENT }
         - { path: ^/profile, roles: ROLE_USER }
-
 when@test:
     security:
         password_hashers:

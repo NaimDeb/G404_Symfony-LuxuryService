@@ -159,12 +159,21 @@
 											-
 										</li>
 										{% if app.user %}
-										<li>
-											<a  href="{{ path('app_profile') }}">
-											
-												Profile
-											</a>
-										</li>
+
+											{% if 'ROLE_CLIENT' in app.user.roles %}
+												<li>
+													<a href="{{ path('client_dashboard') }}">
+														Dashboard
+													</a>
+												</li>
+											{% else %}
+											<li>
+												<a  href="{{ path('app_profile') }}">
+												
+													Profile
+												</a>
+											</li>
+											{% endif %}
 										<li>
 											<a  href="{{ path('app_logout') }}">
 											
@@ -200,7 +209,14 @@
 									</a>
 								</li>
 								<li class=" dropdown">
-									<a target="_self" href="{{ path('app_profile') }}" class="btn bn-lg gradient secondary btn-block waves-effect waves-light btn-register">
+									<a target="_self" 
+									{% if 'ROLE_CLIENT' in app.user.roles %}
+										href="{{ path('client_dashboard') }}"
+									{% else %}
+									href="{{ path('app_profile') }}" 
+									{% endif %}
+									
+									class="btn bn-lg gradient secondary btn-block waves-effect waves-light btn-register">
 										<span>
 											{{ app.user.email }}
 										</span>

@@ -14,7 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[AdminDashboard(routePath: '/recruiter', routeName: 'recruiter')]
+#[AdminDashboard(routePath: '/recruiter', routeName: 'client_dashboard')]
 class ClientDashboardController extends AbstractDashboardController
 {
 
@@ -23,7 +23,7 @@ class ClientDashboardController extends AbstractDashboardController
 
     }
 
-    #[Route("/recruiter")]
+    #[Route("/recruiter", name: "client_dashboard")]
     public function index(): Response
     {
         // return parent::index();

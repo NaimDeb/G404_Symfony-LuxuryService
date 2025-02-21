@@ -90,8 +90,6 @@ final class ProfileController extends AbstractController
             }
 
 
-            // Todo : password
-
             $candidate->setUpdatedAt(new \DateTimeImmutable());
 
             // Recalculate completion rate
