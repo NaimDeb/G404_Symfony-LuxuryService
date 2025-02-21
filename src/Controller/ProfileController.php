@@ -23,14 +23,13 @@ final class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
     public function index(
-        CandidateRepository $candidateRepository,
-        Request $request,
-        EntityManagerInterface $entityManager,
-        CandidateCompletionCalculator $completionCalculator,
-        FileHandlerInterface $fileHandler,
-        PasswordUpdaterInterface $passwordUpdater
-    ): Response 
-    {
+            CandidateRepository $candidateRepository,
+            Request $request,
+            EntityManagerInterface $entityManager,
+            CandidateCompletionCalculator $completionCalculator,
+            FileHandlerInterface $fileHandler,
+            PasswordUpdaterInterface $passwordUpdater
+        ): Response {
 
 
         /**
@@ -40,8 +39,8 @@ final class ProfileController extends AbstractController
 
         $candidate = $candidateRepository->findOneBy(["user" => $this->getUser()]);
 
-                
-        if(!$user->isVerified()) {
+
+        if (!$user->isVerified()) {
             return $this->render('errors/not-verified.html.twig');
         }
 
@@ -62,9 +61,9 @@ final class ProfileController extends AbstractController
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            if( $candidate->getCreatedAt() === null) {
+            if ($candidate->getCreatedAt() === null) {
                 $candidate->setCreatedAt(new \DateTimeImmutable());
             }
 
@@ -97,7 +96,7 @@ final class ProfileController extends AbstractController
 
             // Recalculate completion rate
             // $this->setCandidateStatus($user, $completionRate, $entityManager);
-            
+
             $entityManager->persist($candidate);
             $entityManager->flush();
             $this->addFlash('success', "Your profile has been updated!");
@@ -114,16 +113,38 @@ final class ProfileController extends AbstractController
             'originalProfilPicture' => $this->getOriginalFilename($candidate->getProfilePicture()),
             'originalPassport' => $this->getOriginalFilename($candidate->getPassport()),
             'originalCv' => $this->getOriginalFilename($candidate->getCurriculumVitae()),
-            
+
         ]);
-
-
     }
 
-    // #[Route('/delete_account/{token}', name: 'delete_account')]
-    // public function index() {
+    #[Route('/delete_account', name: 'delete_account')]
+    public function deleteAccount(
+        CandidateRepository $candidatRepository,
+        EntityManagerInterface $entityManager,
+    ) {
+
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        if ($user === null) {
+            return $this->redirectToRoute('app_login');
+        }
         
-    // }
+        
+        $candidat = $candidatRepository->findOneBy(['user' => $user->getId()]);
+        // dd($candidat);
+        if ($candidat !== null) {
+            $candidat->setDeletedAt(new \DateTimeImmutable());
+            $user->setRoles(['ROLE_DELETED']);
+            
+        }
+
+        $entityManager->flush();
+        return $this->redirect($this->generateUrl('app_logout'));
+
+    }
 
 
 
@@ -138,7 +159,7 @@ final class ProfileController extends AbstractController
 
     //     $userRoles = $user->getRoles();	
 
-        
+
 
     //     if ($completionRate === 100 && !in_array('ROLE_CANDIDATE', $userRoles, true)) {
     //         $user->addRole('ROLE_CANDIDATE');
