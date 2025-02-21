@@ -27,7 +27,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column]
-    private bool $isVerified = false;
+    // ! Changed to true because i don't want to do the mailer for new accounts (since mailtrap doesn'"t work in prod)
+    private bool $isVerified = true;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Candidate $candidate = null;
